@@ -119,9 +119,16 @@ def snapshot_instance(project):
 	instances = filter_intances(project)
 
 	for i in instances:
+		print('stopping {0}....'.format(i.id))
+		i.stop()
+		i.wait_until_stopped()
 		for v in i.volumes.all():
-			print('Creating Snapshot {0}....' .format(v.id))
+			print('Creating Snapshot of {0}....' .format(v.id))
 			v.create_snapshot(Description ='Created by Snappy')
+		print('starting {0}....'.format(i.id))
+		i.start()
+		i.wait_until_running()
+	print('job done')
 	return
 
 if __name__ == '__main__':
