@@ -47,8 +47,8 @@ def snapshot():
 @snapshot.command('list')
 @click.option('--project', default=None,
               help="Only Volumes for project (tag Project:<name>")
-def list_instances(project): 
-	"List Instances"
+def list_snapshot(project): 
+	"List Snapshots"
 	instances = filter_intances(project)
 
 	for i in instances:
