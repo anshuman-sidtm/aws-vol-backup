@@ -47,7 +47,9 @@ def snapshot():
 @snapshot.command('list')
 @click.option('--project', default=None,
               help="Only Volumes for project (tag Project:<name>")
-def list_snapshot(project): 
+@click.option('--all', 'list_all', default=False, is_flag=True,
+	help="List all Snapshots")
+def list_snapshot(project, list_all): 
 	"List Snapshots"
 	instances = filter_intances(project)
 
@@ -63,6 +65,7 @@ def list_snapshot(project):
 					s.encrypted and "Encrypted" or "Not Encrypted",
 					s.start_time.strftime("%c")
 					)))
+				if s.state == 'completed' and not list_all: break
 
 	return
 
